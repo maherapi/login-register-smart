@@ -1,0 +1,4 @@
+node_modules
+
+# Routes tests
+**/routes.rest
