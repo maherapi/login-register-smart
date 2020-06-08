@@ -1,0 +1,16 @@
+.my-container {
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.min-w-200 {
+    min-width: 300px;
+}
+
+.login-spinner {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+}
