@@ -20,7 +20,7 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(422).send({ errors: errors.array() });
+      res.status(422).json({ errors: errors.array() });
       return;
     }
     const {
@@ -32,28 +32,30 @@ router.post(
       username,
       password,
     } = req.body;
-    const authRes = await userService.register({
-      first_name,
-      last_name,
-      gender,
-      email,
-      phone_number,
-      username,
-      password,
-    });
-    res.json(authRes);
+    try {
+      const authRes = await userService.register({
+        first_name,
+        last_name,
+        gender,
+        email,
+        phone_number,
+        username,
+        password,
+      });
+      res.json(authRes);
+    } catch (e) {
+      res.status(e.code).json(e.error);
+    }
   }
 );
 
 router.post(
   "/login",
-  [
-    check("email").notEmpty().isEmail()
-  ],
+  [check("email").notEmpty().isEmail()],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(422).send({ errors: errors.array() });
+      res.status(422).json({ errors: errors.array() });
       return;
     }
     const { email, password } = req.body;
@@ -63,8 +65,12 @@ router.post(
         email,
         password,
       });
-    } catch (error) {
-      res.status(401).send("wrong email or password");
+    } catch (e) {
+      if (e.code === 401) {
+        res.status(401).json({ message: "wrong email or password" });
+      } else {
+        res.status(e.code).json(e);
+      }
     }
     res.json(authRes);
   }
