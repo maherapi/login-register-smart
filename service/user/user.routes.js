@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 
+const authMiddlware = require("../middlewares/auth.middleware");
+
 const userService = require("./user.service");
 
 router.post(
@@ -75,5 +77,15 @@ router.post(
     res.json(authRes);
   }
 );
+
+router.get("/user", authMiddlware, async (req, res) => {
+  const userId = req.user && req.user.id;
+  try {
+    const foundedUser = await userService.getUserInfo(userId);
+    res.json(foundedUser);
+  } catch (e) {
+    res.status(e.code).json(e.error);
+  }
+});
 
 module.exports = router;

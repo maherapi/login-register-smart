@@ -62,9 +62,21 @@ async function login(loginCreds) {
   }
 }
 
+async function getUserInfo(userId) {
+  if (!userId) {
+    throw {code: 400, error:{message: "user id missing"}}
+  }
+  const foundedUser = await db.User.findByPk(userId);
+  if(!foundedUser) {
+    throw {code: 404, error: {message: "user not found"}}
+  }
+  delete foundedUser.dataValues.password
+  return foundedUser;
+}
+
 function generateToken(user) {
   const token = jwt.sign(user, jwtSecret);
   return token;
 }
 
-module.exports = { register, login };
+module.exports = { register, login, getUserInfo };
