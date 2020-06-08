@@ -5,7 +5,7 @@ const { check, validationResult } = require("express-validator");
 const userService = require("./user.service");
 
 router.post(
-  "/signup",
+  "/auth/signup",
   [
     check("username")
       .notEmpty()
@@ -50,7 +50,7 @@ router.post(
 );
 
 router.post(
-  "/login",
+  "/auth/login",
   [check("email").notEmpty().isEmail()],
   async (req, res) => {
     const errors = validationResult(req);
