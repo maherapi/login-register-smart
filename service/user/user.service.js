@@ -1,4 +1,8 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+const jwtSecret = require("./jwt-secret-dev");
+
 const db = require("../models");
 
 async function register(signupCreds) {
@@ -25,7 +29,7 @@ async function register(signupCreds) {
   try {
     registeredUser = await db.User.create(user);
     delete registeredUser.dataValues.password;
-    const token = "token";
+    const token = generateToken(registeredUser.dataValues);
     return { user: registeredUser.dataValues, token };
   } catch (e) {
     if (e.name === "SequelizeUniqueConstraintError") {
@@ -48,14 +52,19 @@ async function login(loginCreds) {
       throw { code: 401, error: { message: "password does not match" } };
     }
     delete foundedUser.password;
-    const token = "token";
+    const token = generateToken(foundedUser);
     return { user: foundedUser, token };
   } catch (e) {
-    if(e.code === 401) {
+    if (e.code === 401) {
       throw e;
     }
     throw { error: e, code: 500 };
   }
+}
+
+function generateToken(user) {
+  const token = jwt.sign(user, jwtSecret);
+  return token;
 }
 
 module.exports = { register, login };
