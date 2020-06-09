@@ -9,13 +9,12 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class UserService {
-  private currentUserSubject = new BehaviorSubject<IUser>(null);
-  currentUser$ = this.currentUserSubject.asObservable();
+  private currentUserSubject = new BehaviorSubject<IUser>({});
 
   constructor(private http: HttpClient) {}
 
   getCurrentUserObservable() {
-    return this.currentUser$;
+    return this.currentUserSubject.asObservable();
   }
 
   getCurrentUser() {
@@ -23,7 +22,8 @@ export class UserService {
   }
 
   setCurrentUser(user: IUser) {
-    this.currentUserSubject.next({ ...user });
+    const prevUser = this.getCurrentUser();
+    this.currentUserSubject.next({...prevUser, ...user });
   }
 
   getUser() {

@@ -1,4 +1,5 @@
-<div class="my-container my-5">
+<app-loading-spinner-page *ngIf="loading"></app-loading-spinner-page>
+<div class="my-container my-5" *ngIf="!loading">
   <mat-card class="animate__animated animate__fadeInUp">
     <div class="">
       <app-profile-photo [photoPath]="(user$ | async)?.profile_photo_path"></app-profile-photo>

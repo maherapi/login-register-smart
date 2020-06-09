@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class EditProfileComponent implements OnInit {
   user$: Observable<IUser>;
 
+  loading: boolean = false;
   savingChanges: boolean = false;
 
   firstNameFormControl = new FormControl('', [Validators.required]);
@@ -52,8 +53,12 @@ export class EditProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.user$ = this.userService.getUser().pipe(
-      tap((user) => {
+    this.loading = true;
+    this.userService
+      .getUser()
+      .toPromise()
+      .then((user) => {
+        this.user$ = this.userService.getCurrentUserObservable();
         this.firstNameFormControl.setValue(user.first_name);
         this.lastNameFormControl.setValue(user.last_name);
         this.genderFormControl.setValue(user.gender);
@@ -61,7 +66,8 @@ export class EditProfileComponent implements OnInit {
         this.phoneNumberFormControl.setValue(user.phone_number);
         this.usernameFormControl.setValue(user.username);
       })
-    );
+      .finally(() => (this.loading = false));
+    this.onFormChange();
   }
 
   onSaveClick() {
@@ -83,11 +89,12 @@ export class EditProfileComponent implements OnInit {
       })
       .finally(() => {
         this.savingChanges = false;
-      })
+      });
   }
 
   onFormChange() {
     this.editForm.valueChanges.subscribe(() => {
+      const prevUser = this.userService.getCurrentUser();
       const user: IUser = this.getValuesFromForm();
       this.userService.setCurrentUser({ ...user });
     });
