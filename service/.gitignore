@@ -2,3 +2,6 @@ node_modules
 
 # Routes tests
 **/routes.rest
+
+# Profile images
+profile-images

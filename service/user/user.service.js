@@ -84,9 +84,19 @@ async function updateUserInfo(userId, user) {
   return updatedUser;
 }
 
+async function updateProfilePhotoPath(userId, path) {
+  if (!userId) {
+    throw { code: 400, error: { message: "user id missing" } };
+  }
+  const foundedUser = await db.User.findByPk(userId);
+  const updatedUser = await foundedUser.update({profile_photo_path: path});
+  delete updatedUser.dataValues.password;
+  return updatedUser;
+}
+
 function generateToken(user) {
   const token = jwt.sign(user, jwtSecret);
   return token;
 }
 
-module.exports = { register, login, getUserInfo, updateUserInfo };
+module.exports = { register, login, getUserInfo, updateUserInfo, updateProfilePhotoPath };

@@ -1,0 +1,32 @@
+.profile-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  img {
+    width: auto;
+    height: 100px;
+  }
+}
+
+.w-fit-content {
+  width: fit-content;
+}
+
+.h-fit-content {
+  height: fit-content;
+}
+
+.img-container {
+  position: relative;
+}
+
+.upload-img-btn {
+  position: absolute;
+}
+
+.img-preview {
+  max-width: 300px;
+  max-height: 300px;
+}

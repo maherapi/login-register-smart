@@ -14,6 +14,8 @@ import { SharedModule } from './shared/shared.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { ProfilePhotoComponent } from './components/profile-photo/profile-photo.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
     ProfileComponent,
     EditProfileComponent,
     NavbarComponent,
+    ProfilePhotoComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
     BrowserAnimationsModule,
     SharedModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

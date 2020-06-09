@@ -37,6 +37,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    profile_photo_path: {
+      type: DataTypes.STRING
+    },
 
     // Timestamps
     createdAt: DataTypes.DATE,

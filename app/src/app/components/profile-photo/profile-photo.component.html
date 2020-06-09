@@ -1,0 +1,25 @@
+<div class="img-container d-block my-3 mx-auto w-fit-content">
+  <div class="profile-img">
+    <img
+      [src]="_path"
+      alt="Profile Image"
+    />
+  </div>
+
+  <button mat-icon-button class="upload-img-btn" (click)="fileInput.click()">
+    <mat-icon *ngIf="!uploadingImg" title="upload new image">add_photo_alternate </mat-icon>
+    <mat-spinner *ngIf="uploadingImg" class="d-block my-0 mx-auto" diameter="20"></mat-spinner>
+  </button>
+  <input type="file" accept="image/*" class="d-none" #fileInput (change)="onImageSelect($event, imagePreviewDialog)">
+</div>
+
+<ng-template #imagePreviewDialog>
+  <h2 matDialogTitle>Image Preview</h2>
+  <mat-dialog-content>
+    <img class="img-preview" [src]="imgPreviewUrl" alt="image preview">
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-raised-button matDialogClose color="primary" (click)="onImgUploadClick()">Upload</button>
+    <button mat-button matDialogClose color="primary">Cancel</button>
+  </mat-dialog-actions>
+</ng-template>

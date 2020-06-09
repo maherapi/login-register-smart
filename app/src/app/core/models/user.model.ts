@@ -6,4 +6,5 @@ export interface IUser {
   email?: string;
   phone_number?: string;
   username?: string;
+  profile_photo_path?: string;
 }

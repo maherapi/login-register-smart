@@ -1,8 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
+const multer = require("multer");
 
 const authMiddlware = require("../middlewares/auth.middleware");
+
+const {
+  storage,
+  fileFilter,
+  limits,
+  SIZE_LIMIT_MB,
+} = require("./profile-photo-storage-config");
+const upload = multer({ storage, fileFilter, limits });
 
 const userService = require("./user.service");
 
@@ -111,6 +120,31 @@ router.put("/user", authMiddlware, async (req, res) => {
   } catch (e) {
     res.status(e.code).json(e.error);
   }
+});
+
+router.post("/user/photo", authMiddlware, async (req, res) => {
+  upload.single("profile_photo")(req, res, async (err) => {
+    if (err instanceof multer.MulterError) {
+      if (err.code === "LIMIT_FILE_SIZE") {
+        res
+          .status(400)
+          .json({ message: `file size must be less than ${SIZE_LIMIT_MB} MB` });
+      }
+      res.status(400).json({ message: err.code });
+    } else if (err) {
+      res.status(500).json(err);
+    }
+    const userId = req.user.id;
+    try {
+      const updatedUser = await userService.updateProfilePhotoPath(
+        userId,
+        req.file.filename
+      );
+      res.json(updatedUser);
+    } catch (e) {
+      res.status(e.code || 500).json(e.error);
+    }
+  });
 });
 
 module.exports = router;

@@ -1,16 +1,7 @@
 <div class="my-container my-5">
   <mat-card class="animate__animated animate__fadeInUp">
     <div class="">
-      <div class="img-container d-block my-3 mx-auto w-fit-content">
-        <img
-          class="profile-img"
-          src="../../../assets/images/accounts/default-avatar.png"
-          alt="Profile Image"
-        />
-        <button mat-icon-button class="upload-img-btn">
-          <mat-icon title="upload new image">add_photo_alternate </mat-icon>
-        </button>
-      </div>
+      <app-profile-photo [photoPath]="(user$ | async)?.profile_photo_path"></app-profile-photo>
     </div>
     <mat-card-header class="row justify-content-center">
       <mat-card-title class="col-12">

@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const imports = [
   MatToolbarModule,
@@ -20,7 +21,7 @@ const imports = [
   ReactiveFormsModule,
   MatProgressSpinnerModule,
   MatSelectModule,
-  MatIconModule
+  MatIconModule,
 ];
 
 @NgModule({

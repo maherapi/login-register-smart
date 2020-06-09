@@ -4,6 +4,9 @@ const db = require("./models");
 const app = express();
 const PORT = 3000;
 
+// serve static profile images
+app.use(express.static("profile-images"));
+
 // global middlewares
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -15,5 +18,7 @@ app.use(routes);
 db.sequelize
   .sync()
   .then(() =>
-    app.listen(PORT, () => console.log(`Server started at http://localhost:${PORT}`))
+    app.listen(PORT, () =>
+      console.log(`Server started at http://localhost:${PORT}`)
+    )
   );
