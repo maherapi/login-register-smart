@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { ILoginCreds } from 'src/app/core/dtos/login-creds.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,24 +18,27 @@ export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({
     email: this.emailFormControl,
-    password: this.passwordFormControl
-  })
+    password: this.passwordFormControl,
+  });
 
   loggingIn = false;
 
-  constructor() {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
   onLoginClick() {
-    let loginCreds = {
+    let loginCreds: ILoginCreds = {
       email: this.emailFormControl.value,
       password: this.passwordFormControl.value,
     };
     this.loggingIn = true;
-    setTimeout(() => {
-      this.loggingIn = false;
-      console.log(loginCreds);
-    }, 3000);
+    this.authService
+      .login(loginCreds)
+      .toPromise()
+      .then((authData) => {
+        this.loggingIn = false;
+        this.router.navigateByUrl('/profile');
+      });
   }
 }

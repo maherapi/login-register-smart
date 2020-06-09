@@ -1,0 +1,8 @@
+<mat-toolbar color="primary">
+  <span class="text-white">PROFILE</span>
+
+  <span class="spacer"></span>
+  <button *ngIf="isLoggedIn$ | async" mat-button (click)="onLogoutClick()" class="text-white">
+    Logout
+  </button>
+</mat-toolbar>
