@@ -2,13 +2,17 @@
   <mat-card class="animate__animated animate__fadeInUp">
     <div class="">
       <div class="img-container d-block my-3 mx-auto w-fit-content">
-        <img class="profile-img" src="../../../assets/images/accounts/default-avatar.png" alt="Profile Image">
-        <button mat-icon-button class="upload-img-btn"><mat-icon title="upload new image">add_photo_alternate
-        </mat-icon></button>
+        <img
+          class="profile-img"
+          src="../../../assets/images/accounts/default-avatar.png"
+          alt="Profile Image"
+        />
+        <button mat-icon-button class="upload-img-btn">
+          <mat-icon title="upload new image">add_photo_alternate </mat-icon>
+        </button>
       </div>
     </div>
     <mat-card-header class="row justify-content-center">
-    
       <mat-card-title class="col-12">
         Welcome {{ (user$ | async)?.first_name }}
       </mat-card-title>
@@ -16,7 +20,6 @@
     <mat-divider></mat-divider>
     <div class="min-w-200 container mt-3">
       <mat-card-content>
-
         <!-- Personal Info -->
         <div class="row justify-content-center">
           <h3 class="col-12 my-2">Personal Information</h3>
@@ -44,27 +47,37 @@
 
         <!-- Account Info -->
         <div class="row justify-content-center">
-            <h3 class="col-12 my-3">Account Information</h3>
-            <div class="col-12 my-2">
-              <div class="row">
-                <span class="col-12 col-md-2 text-muted">Email: </span>
-                <span class="col">{{ (user$ | async)?.email }}</span>
-              </div>
-            </div>
-            <div class="col-12 my-2">
-              <div class="row">
-                <span class="col-12 col-md-2 text-muted">Phone: </span>
-                <span class="col">{{ (user$ | async)?.phone_number }}</span>
-              </div>
-            </div>
-            <div class="col-12 my-2">
-              <div class="row">
-                <span class="col-12 col-md-2 text-muted">Username: </span>
-                <span class="col">{{ (user$ | async)?.username }}</span>
-              </div>
+          <h3 class="col-12 my-3">Account Information</h3>
+          <div class="col-12 my-2">
+            <div class="row">
+              <span class="col-12 col-md-2 text-muted">Email: </span>
+              <span class="col">{{ (user$ | async)?.email }}</span>
             </div>
           </div>
+          <div class="col-12 my-2">
+            <div class="row">
+              <span class="col-12 col-md-2 text-muted">Phone: </span>
+              <span class="col">{{ (user$ | async)?.phone_number }}</span>
+            </div>
+          </div>
+          <div class="col-12 my-2">
+            <div class="row">
+              <span class="col-12 col-md-2 text-muted">Username: </span>
+              <span class="col">{{ (user$ | async)?.username }}</span>
+            </div>
+          </div>
+        </div>
       </mat-card-content>
+      <mat-card-actions>
+        <a
+          routerLink="/edit-profile"
+          mat-button
+          color="primary"
+          class="text-decoration-none col-12 mx-0 mt-1 h-fit-content"
+        >
+          Edit <mat-icon class="edit-icon h-100">edit</mat-icon>
+        </a>
+      </mat-card-actions>
     </div>
   </mat-card>
 </div>

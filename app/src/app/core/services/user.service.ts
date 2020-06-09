@@ -31,4 +31,9 @@ export class UserService {
     return this.http.get<IUser>(`${env.api}/user`)
       .pipe(tap(user => this.setCurrentUser(user)));
   }
+
+  updateUser(newUser: IUser) {
+    return this.http.put<IUser>(`${env.api}/user`, newUser)
+      .pipe(tap(user => this.setCurrentUser(user)));
+  }
 }

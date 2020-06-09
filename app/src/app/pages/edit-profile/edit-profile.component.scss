@@ -1,0 +1,23 @@
+.profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.w-fit-content {
+    width: fit-content;
+}
+
+.img-container {
+    position: relative;
+}
+
+.upload-img-btn {
+    position: absolute;
+}
+
+.save-spinner {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+}

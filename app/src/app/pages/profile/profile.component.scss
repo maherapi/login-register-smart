@@ -8,10 +8,19 @@
     width: fit-content;
 }
 
+.h-fit-content {
+    height: fit-content;
+}
+
 .img-container {
     position: relative;
 }
 
 .upload-img-btn {
     position: absolute;
+}  
+
+.edit-icon {
+    width: 15px;
+    height: 15px;
 }
