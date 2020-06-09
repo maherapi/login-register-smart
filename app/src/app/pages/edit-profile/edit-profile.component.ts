@@ -94,7 +94,6 @@ export class EditProfileComponent implements OnInit {
 
   onFormChange() {
     this.editForm.valueChanges.subscribe(() => {
-      const prevUser = this.userService.getCurrentUser();
       const user: IUser = this.getValuesFromForm();
       this.userService.setCurrentUser({ ...user });
     });
