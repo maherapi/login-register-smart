@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef } from '@angular/core';
+import { Component, OnInit, Input, TemplateRef, ViewChild, ElementRef } from '@angular/core';
 import { environment as env } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from 'src/app/core/services/user.service';
@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./profile-photo.component.scss'],
 })
 export class ProfilePhotoComponent implements OnInit {
+  @ViewChild('fileInput', {static: true}) fileInput: ElementRef<HTMLInputElement>;
   private DEFAUL_PATH = '../../../assets/images/accounts/default-avatar.png';
   _path: string;
   @Input() set photoPath(path: string) {
@@ -59,5 +60,11 @@ export class ProfilePhotoComponent implements OnInit {
       .finally(() => {
         this.uploadingImg = false;
       });
+  }
+
+  onCancelClick() {
+    this.imgPreviewUrl = null;
+    this.image = null;
+    this.fileInput.nativeElement.value = "";
   }
 }
