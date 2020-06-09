@@ -1,3 +1,70 @@
-<pre>
-    {{user$ | async | json}}
-</pre>
+<div class="my-container my-5">
+  <mat-card class="animate__animated animate__fadeInUp">
+    <div class="">
+      <div class="img-container d-block my-3 mx-auto w-fit-content">
+        <img class="profile-img" src="../../../assets/images/accounts/default-avatar.png" alt="Profile Image">
+        <button mat-icon-button class="upload-img-btn"><mat-icon title="upload new image">add_photo_alternate
+        </mat-icon></button>
+      </div>
+    </div>
+    <mat-card-header class="row justify-content-center">
+    
+      <mat-card-title class="col-12">
+        Welcome {{ (user$ | async)?.first_name }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <div class="min-w-200 container mt-3">
+      <mat-card-content>
+
+        <!-- Personal Info -->
+        <div class="row justify-content-center">
+          <h3 class="col-12 my-2">Personal Information</h3>
+          <div class="col-12 my-2">
+            <div class="row">
+              <span class="col-12 col-md-2 text-muted">First name: </span>
+              <span class="col">{{ (user$ | async)?.first_name }}</span>
+            </div>
+          </div>
+          <div class="col-12 my-2">
+            <div class="row">
+              <span class="col-12 col-md-2 text-muted">Last name: </span>
+              <span class="col">{{ (user$ | async)?.last_name }}</span>
+            </div>
+          </div>
+          <div class="col-12 my-2">
+            <div class="row">
+              <span class="col-12 col-md-2 text-muted">Gender: </span>
+              <span class="col">{{ (user$ | async)?.gender }}</span>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Account Info -->
+        <div class="row justify-content-center">
+            <h3 class="col-12 my-3">Account Information</h3>
+            <div class="col-12 my-2">
+              <div class="row">
+                <span class="col-12 col-md-2 text-muted">Email: </span>
+                <span class="col">{{ (user$ | async)?.email }}</span>
+              </div>
+            </div>
+            <div class="col-12 my-2">
+              <div class="row">
+                <span class="col-12 col-md-2 text-muted">Phone: </span>
+                <span class="col">{{ (user$ | async)?.phone_number }}</span>
+              </div>
+            </div>
+            <div class="col-12 my-2">
+              <div class="row">
+                <span class="col-12 col-md-2 text-muted">Username: </span>
+                <span class="col">{{ (user$ | async)?.username }}</span>
+              </div>
+            </div>
+          </div>
+      </mat-card-content>
+    </div>
+  </mat-card>
+</div>
