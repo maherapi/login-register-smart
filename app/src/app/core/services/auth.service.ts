@@ -28,7 +28,7 @@ export class AuthService {
   signup(signupCreds: ISignupCreds) {
     return this.http
       .post<IAuthData>(`${env.api}/auth/signup`, signupCreds)
-      .pipe(tap(this.handleAuthData));
+      .pipe(tap((authData) => this.handleAuthData(authData)));
   }
 
   login(loginCreds: ILoginCreds) {

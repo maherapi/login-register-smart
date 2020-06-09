@@ -8,7 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatSelectModule} from '@angular/material/select'; 
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 
 const imports = [
   MatToolbarModule,
@@ -18,7 +19,8 @@ const imports = [
   MatInputModule,
   ReactiveFormsModule,
   MatProgressSpinnerModule,
-  MatSelectModule
+  MatSelectModule,
+  MatIconModule
 ];
 
 @NgModule({
