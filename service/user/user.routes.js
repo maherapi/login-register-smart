@@ -88,4 +88,29 @@ router.get("/user", authMiddlware, async (req, res) => {
   }
 });
 
+router.put("/user", authMiddlware, async (req, res) => {
+  const userId = req.user && req.user.id;
+  const {
+    first_name,
+    last_name,
+    gender,
+    email,
+    phone_number,
+    username,
+  } = req.body;
+  try {
+    const updatedUser = await userService.updateUserInfo(userId, {
+      first_name,
+      last_name,
+      gender,
+      email,
+      phone_number,
+      username,
+    });
+    res.json(updatedUser);
+  } catch (e) {
+    res.status(e.code).json(e.error);
+  }
+});
+
 module.exports = router;

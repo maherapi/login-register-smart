@@ -64,14 +64,24 @@ async function login(loginCreds) {
 
 async function getUserInfo(userId) {
   if (!userId) {
-    throw {code: 400, error:{message: "user id missing"}}
+    throw { code: 400, error: { message: "user id missing" } };
   }
   const foundedUser = await db.User.findByPk(userId);
-  if(!foundedUser) {
-    throw {code: 404, error: {message: "user not found"}}
+  if (!foundedUser) {
+    throw { code: 404, error: { message: "user not found" } };
   }
-  delete foundedUser.dataValues.password
+  delete foundedUser.dataValues.password;
   return foundedUser;
+}
+
+async function updateUserInfo(userId, user) {
+  if (!userId) {
+    throw { code: 400, error: { message: "user id missing" } };
+  }
+  const foundedUser = await db.User.findByPk(userId);
+  const updatedUser = await foundedUser.update(user);
+  delete updatedUser.dataValues.password;
+  return updatedUser;
 }
 
 function generateToken(user) {
@@ -79,4 +89,4 @@ function generateToken(user) {
   return token;
 }
 
-module.exports = { register, login, getUserInfo };
+module.exports = { register, login, getUserInfo, updateUserInfo };
