@@ -3,6 +3,7 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ILoginCreds } from 'src/app/core/dtos/login-creds.interface';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,11 @@ export class LoginComponent implements OnInit {
 
   loggingIn = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {}
 
@@ -39,6 +44,10 @@ export class LoginComponent implements OnInit {
       .then((authData) => {
         this.loggingIn = false;
         this.router.navigateByUrl('/profile');
+      })
+      .catch((error) => {
+        this.snackBar.open(error.error.message, 'error', { duration: 4000 });
+        this.loggingIn = false;
       });
   }
 }

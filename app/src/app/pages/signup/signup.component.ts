@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ISignupCreds } from 'src/app/core/dtos/signup-creds.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-signup',
@@ -45,7 +46,11 @@ export class SignupComponent implements OnInit {
 
   signingUp = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {}
 
@@ -66,6 +71,10 @@ export class SignupComponent implements OnInit {
       .then(() => {
         this.signingUp = false;
         this.router.navigateByUrl('/profile');
+      })
+      .catch((error) => {
+        this.snackBar.open(error.error.message, 'error', { duration: 4000 })
+        this.signingUp = false;
       });
   }
 }
