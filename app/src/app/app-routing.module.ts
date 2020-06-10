@@ -6,6 +6,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { LoginGuard } from './core/guards/login.guard';
 import { NotLoggedInGuard } from './core/guards/not-logged-in.guard';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,11 @@ const routes: Routes = [
   {
     path: 'edit-profile',
     component: EditProfileComponent,
+    canActivate: [LoginGuard]
+  },
+  {
+    path: 'change-password',
+    component: ChangePasswordComponent,
     canActivate: [LoginGuard]
   },
   {

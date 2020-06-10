@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
 import { IUser } from '../models/user.model';
 import { tap } from 'rxjs/operators';
+import { IChangePasswordCreds } from '../dtos/change-password-creds.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,7 @@ export class UserService {
 
   setCurrentUser(user: IUser) {
     const prevUser = this.getCurrentUser();
-    this.currentUserSubject.next({...prevUser, ...user });
+    this.currentUserSubject.next({ ...prevUser, ...user });
   }
 
   getUser() {
@@ -43,6 +44,12 @@ export class UserService {
     formData.append('profile_photo', photo);
     return this.http
       .post<IUser>(`${env.api}/user/photo`, formData)
+      .pipe(tap((user) => this.setCurrentUser(user)));
+  }
+
+  changePassword(changePassCreds: IChangePasswordCreds) {
+    return this.http
+      .post<IUser>(`${env.api}/auth/password`, changePassCreds)
       .pipe(tap((user) => this.setCurrentUser(user)));
   }
 }

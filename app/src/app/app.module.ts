@@ -17,6 +17,7 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { ProfilePhotoComponent } from './components/profile-photo/profile-photo.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoadingSpinnerPageComponent } from './components/loading-spinner-page/loading-spinner-page.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { LoadingSpinnerPageComponent } from './components/loading-spinner-page/l
     NavbarComponent,
     ProfilePhotoComponent,
     LoadingSpinnerPageComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
