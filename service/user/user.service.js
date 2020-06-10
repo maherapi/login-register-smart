@@ -89,7 +89,28 @@ async function updateProfilePhotoPath(userId, path) {
     throw { code: 400, error: { message: "user id missing" } };
   }
   const foundedUser = await db.User.findByPk(userId);
-  const updatedUser = await foundedUser.update({profile_photo_path: path});
+  const updatedUser = await foundedUser.update({ profile_photo_path: path });
+  delete updatedUser.dataValues.password;
+  return updatedUser;
+}
+
+async function changePassword(userId, old_password, new_password) {
+  if (!userId) {
+    throw { code: 400, error: { message: "user id missing" } };
+  }
+  if (!new_password) {
+    throw { code: 400, error: { message: "new password missing" } };
+  }
+  if (!new_password) {
+    throw { code: 400, error: { message: "old password missing" } };
+  }
+  const user = await db.User.findByPk(userId);
+  const userData = user.dataValues;
+  if (!(await bcrypt.compare(old_password, userData.password))) {
+    throw { code: 401, error: { message: "password does not match" } };
+  }
+  const hashedNewPassword = await bcrypt.hash(new_password, 10);
+  const updatedUser = await user.update({ password: hashedNewPassword });
   delete updatedUser.dataValues.password;
   return updatedUser;
 }
@@ -99,4 +120,11 @@ function generateToken(user) {
   return token;
 }
 
-module.exports = { register, login, getUserInfo, updateUserInfo, updateProfilePhotoPath };
+module.exports = {
+  register,
+  login,
+  getUserInfo,
+  updateUserInfo,
+  updateProfilePhotoPath,
+  changePassword,
+};

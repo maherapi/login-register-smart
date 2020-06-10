@@ -147,4 +147,33 @@ router.post("/user/photo", authMiddlware, async (req, res) => {
   });
 });
 
+router.post(
+  "/auth/password",
+  authMiddlware,
+  [
+    check("email").notEmpty().isEmail(),
+    check("old_password").notEmpty().isLength({ min: 8, max: 20 }),
+    check("new_password").notEmpty().isLength({ min: 8, max: 20 }),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }
+    const userId = req.user && req.user.id;
+    const emailFromToken = req.user && req.user.email;
+    const { email, old_password, new_password } = req.body;
+    if(email !== emailFromToken) {
+      res.status(401).json({ message: "email does not match" })
+    }
+    try {
+      const updatedUser = await userService.changePassword(userId, old_password, new_password);
+      res.json(updatedUser);
+    } catch (e) {
+      res.status(e.code).json(e.error);
+    }
+  }
+);
+
 module.exports = router;
