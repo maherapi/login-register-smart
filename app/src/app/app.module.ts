@@ -18,6 +18,8 @@ import { ProfilePhotoComponent } from './components/profile-photo/profile-photo.
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoadingSpinnerPageComponent } from './components/loading-spinner-page/loading-spinner-page.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { SetNewPasswordComponent } from './pages/set-new-password/set-new-password.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
     ProfilePhotoComponent,
     LoadingSpinnerPageComponent,
     ChangePasswordComponent,
+    ResetPasswordComponent,
+    SetNewPasswordComponent,
   ],
   imports: [
     BrowserModule,

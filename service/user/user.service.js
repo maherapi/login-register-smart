@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const moment = require("moment");
 const jwt = require("jsonwebtoken");
 
 const jwtSecret = require("./jwt-secret-dev");
@@ -115,8 +116,58 @@ async function changePassword(userId, old_password, new_password) {
   return updatedUser;
 }
 
+async function resetPassword(userId, new_password) {
+  try {
+    if (!userId) {
+      throw { code: 400, error: { message: "user id missing" } };
+    }
+    if (!new_password) {
+      throw { code: 400, error: { message: "new password missing" } };
+    }
+    const user = await db.User.findByPk(userId);
+    const hashedNewPassword = await bcrypt.hash(new_password, 10);
+    const updatedUser = await user.update({ password: hashedNewPassword });
+    delete updatedUser.dataValues.password;
+    return updatedUser;
+  } catch (e) {
+    if (e.code === 400) {
+      throw e;
+    } else {
+      throw { code: 500, error: e };
+    }
+  }
+}
+
+async function resetPasswordToken(email) {
+  try {
+    const user = await db.User.findOne({ where: { email } });
+    if (!user) {
+      throw { code: 401, error: { message: "user not found" } };
+    }
+    const foundedUser = user.dataValues;
+    delete foundedUser.password;
+    const reset_token = generateResetPasswordToken(foundedUser);
+    return { reset_token, user: foundedUser };
+  } catch (e) {
+    if (e.code === 401) {
+      throw e;
+    } else {
+      throw { error: e, code: 500 };
+    }
+  }
+}
+
 function generateToken(user) {
   const token = jwt.sign(user, jwtSecret);
+  return token;
+}
+
+function generateResetPasswordToken(user) {
+  const payload = {
+    ...user,
+    resetExpire: moment.utc().add(60 * 5, "seconds"),
+  };
+  const token = jwt.sign(payload, jwtSecret);
   return token;
 }
 
@@ -127,4 +178,6 @@ module.exports = {
   updateUserInfo,
   updateProfilePhotoPath,
   changePassword,
+  resetPasswordToken,
+  resetPassword,
 };

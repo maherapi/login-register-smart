@@ -5,6 +5,7 @@ import { environment as env } from 'src/environments/environment';
 import { IUser } from '../models/user.model';
 import { tap } from 'rxjs/operators';
 import { IChangePasswordCreds } from '../dtos/change-password-creds.interface';
+import { ISetNewPasswordCreds } from '../dtos/set-new-password-creds.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -51,5 +52,28 @@ export class UserService {
     return this.http
       .post<IUser>(`${env.api}/auth/password`, changePassCreds)
       .pipe(tap((user) => this.setCurrentUser(user)));
+  }
+
+  resetPasswordLink(email: string) {
+    return this.http
+      .post<any>(`${env.api}/auth/password/resetlink`, { email })
+      .pipe(
+        tap((data) =>
+          console.log(
+            `${env.url}/set-new-password?reset_token=${data.reset_token}`
+          )
+        )
+      );
+  }
+
+  setNewPassword(setNewPassCreds: ISetNewPasswordCreds) {
+    return this.http
+      .post<IUser>(`${env.api}/auth/password/reset`, setNewPassCreds)
+      .pipe(
+        tap((user) => {
+          console.log(user);
+          this.setCurrentUser(user);
+        })
+      );
   }
 }

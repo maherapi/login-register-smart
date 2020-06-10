@@ -7,43 +7,54 @@ import { EditProfileComponent } from './pages/edit-profile/edit-profile.componen
 import { LoginGuard } from './core/guards/login.guard';
 import { NotLoggedInGuard } from './core/guards/not-logged-in.guard';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
-
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { SetNewPasswordComponent } from './pages/set-new-password/set-new-password.component';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [NotLoggedInGuard]
+    canActivate: [NotLoggedInGuard],
   },
   {
     path: 'signup',
     component: SignupComponent,
-    canActivate: [NotLoggedInGuard]
+    canActivate: [NotLoggedInGuard],
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
+    canActivate: [NotLoggedInGuard],
+  },
+  {
+    path: 'set-new-password',
+    component: SetNewPasswordComponent,
+    canActivate: [NotLoggedInGuard],
   },
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [LoginGuard]
+    canActivate: [LoginGuard],
   },
   {
     path: 'edit-profile',
     component: EditProfileComponent,
-    canActivate: [LoginGuard]
+    canActivate: [LoginGuard],
   },
   {
     path: 'change-password',
     component: ChangePasswordComponent,
-    canActivate: [LoginGuard]
+    canActivate: [LoginGuard],
   },
   {
     path: '',
     redirectTo: 'profile',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
